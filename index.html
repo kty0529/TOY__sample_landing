@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=1440, initial-scale=1.0">
+
+	<title>[code] agency</title>
+
+	<!-- fonts -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+	<!-- vendor -->
+	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+	<!-- css -->
+	<link rel="stylesheet" href="./assets/css/reset.min.css">
+	<link rel="stylesheet" href="./assets/css/fixed-grid.min.css">
+	<link rel="stylesheet" href="./assets/css/core.min.css">
+</head>
+
+<body>
+	<div id="wrap">
+		<header id="header">
+			<div class="container">
+				<div class="row">
+					<div class="col-4 title-col">
+						<h1 class="title">Wallel</h1>
+					</div>
+
+					<div class="col-7 col-offset-1 nav-col">
+						<ul class="nav">
+							<li><a href="#project">Project</a></li>
+							<li><a href="#team">Team</a></li>
+							<li><a href="#contact">Contact Us</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<main id="main">
+			<div class="section sec-slider">
+				<div class="swiper-container">
+					<ul class="swiper-wrapper">
+						<li class="swiper-slide slider-01 has-overlay" data-header-theme="light" style="background-image: url('./assets/images/sec-slider01.jpg');">
+							<div class="container">
+								<div class="row">
+									<div class="col-12">slider1</div>
+								</div>
+							</div>
+						</li>
+						<li class="swiper-slide slider-02 has-overlay" data-header-theme="light" style="background-image: url('./assets/images/sec-slider02.jpg');">
+							<div class="container">
+								<div class="row">
+									<div class="col-12">slider2</div>
+								</div>
+							</div>
+						</li>
+						<li class="swiper-slide slider-03" data-header-theme="dark">
+							<div class="container">
+								<div class="row">
+									<div class="col-6"><img src="./assets/images/sec-slider03-vector.jpg" alt=""></div>
+									<div class="col-6">slider3</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+				<div class="progress-bar"></div>
+			</div>
+
+			<article class="section sec-project">
+				<header class="section-header">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">Projects</div>
+						</div>
+					</div>
+				</header>
+
+				<div class="section-container">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">project</div>
+						</div>
+					</div>
+				</div>
+			</article>
+
+			<article class="section sec-team" style="height: 1000px;">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">teams</div>
+					</div>
+				</div>
+			</article>
+
+			<article class="section sec-contact">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">contactus</div>
+					</div>
+				</div>
+			</article>
+		</main>
+
+		<footer id="footer">
+			<h2 class="blind">Footer</h2>
+
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+
+						<div class="copyright">ⓒ 2021 <strong>wallel</strong></div>
+
+						<div class="thanks">
+							<a href="https://jquery.com" target="_blank">jQuery</a>,
+							<a href="https://swiperjs.com" target="_blank">Swiper</a>,
+							<a href="https://fontawesome.com" target="_blank">Font Awesome 5</a>,
+							<a href="https://randomuser.me/" target="_blank">Random User Generator</a>,
+							<a href="https://unsplash.com/" target="_blank">Unsplash</a>,
+							<a href="https://www.vecteezy.com/free-vector/website" target="_blank">Website Vectors by Vecteezy</a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+	<!-- script -->
+	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+	<script>
+		(function() {
+			// header
+			const header = {
+				elm: document.querySelector('#header'),
+				theme: '',
+				sliderEvent: function(slider) {
+					const t = this;
+
+					let activeSlider = slider.slides[ slider.activeIndex ];
+					let getHeaderTheme = activeSlider.dataset.headerTheme;
+
+					t.theme = getHeaderTheme;
+
+					if ( ! t.elm.classList.contains('fixed') ) {
+						t.elm.removeAttribute('class');
+						t.elm.classList.add(t.theme);
+					}
+
+					console.log(t.theme);
+				},
+				scrollEvent: function() {
+					const t = this;
+
+					if ( window.scrollY > 100 ) {
+						t.elm.classList.add('fixed');
+					} else {
+						t.elm.removeAttribute('class');
+						t.elm.classList.add(t.theme);
+					}
+				}
+			}
+
+			// section - slider
+			const progress_bar = document.querySelector('.progress-bar');
+			const sec01_slider = new Swiper('.sec-slider .swiper-container', {
+				loop: true,
+				slidesPerView: 1,
+				// autoplay: {
+				// 	delay: 1000
+				// },
+				on: {
+					init: function(swiper) {
+						header.sliderEvent(swiper);
+					},
+					slideChange: function(swiper) {
+						header.sliderEvent(swiper);
+					}
+				}
+			});
+
+			header.scrollEvent();
+			window.addEventListener('scroll', function(e) {
+				header.scrollEvent();
+			});
+		})();
+	</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+#footer {
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+	height: 200px;
+	font-size: 14px;
+	color: #fff;
+	text-align: center;
+	background-color: #252525;
+
+	a {
+		color: inherit;
+	}
+
+	.copyright {}
+
+	.thanks {
+		margin-top: 10px;
+		font-weight: 300;
+		line-height: 30px;
+		letter-spacing: -0.5%;
+	}
+}

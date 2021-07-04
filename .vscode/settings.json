@@ -1,0 +1,26 @@
+{
+	"liveSassCompile.settings.formats": [
+		{
+			"extensionName": ".min.css",
+			"format": "compressed",
+			"savePath": "~/../css"
+		}
+	],
+	"liveSassCompile.settings.excludeList": [
+		"**/node_modules/**",
+		".vscode/**"
+	],
+	"liveSassCompile.settings.generateMap": true,
+	"liveSassCompile.settings.autoprefix": [
+		"> 1%",
+		"last 2 versions",
+		"IE 10"
+	],
+
+	// compile 시 error 일 때만 출력 창 띄우기
+	"liveSassCompile.settings.showOutputWindowOn": "Error",
+
+	// watch를 시작했을 때 전체 파일을 다시 compile 하지 않게 설정. (작업자가 저장한 파일만 컴파일)
+	// 개발 싱크가 맞지 않은 상태에서 compile 하여 덮어씌우는것을 방지하기 위함.
+	"liveSassCompile.settings.compileOnWatch": false
+}
