@@ -2,6 +2,7 @@
 @import './helpers/mixins';
 @import './helpers/variables';
 
+// pages
 #main {
 	flex: 1 1 auto;
 }
@@ -22,6 +23,7 @@
 		min-height: 800px;
 		height: 70vh;
 		background-size: cover;
+		background-color: #fff;
 
 		&.has-overlay {
 			& > .container {
@@ -70,6 +72,8 @@
 	}
 
 	.slider-03 {
+		border-bottom: 1px solid #ddd;
+
 		.content {
 			display: flex;
 			flex-direction: column;
@@ -267,6 +271,90 @@
 						height: 100px;
 						background-color: #ddd;
 					}
+				}
+			}
+		}
+	}
+}
+
+.sec-contact {
+	padding: 100px 0 95px;
+
+	.form {
+		fieldset {
+			margin: 0;
+			padding: 0;
+			border: 0;
+		}
+	}
+
+	.form-row {
+		&:not(:last-child) {
+			margin-bottom: 30px;
+		}
+
+		label {
+			display: block;
+			font-size: 14px;
+			font-weight: 300;
+			line-height: 20px;
+			letter-spacing: 2px;
+		}
+
+		input, textarea {
+			@include placeholder {
+				color: #aaa;
+				letter-spacing: 2px;
+			}
+			margin-top: 10px;
+			padding: 0 20px;
+			width: 100%;
+			height: 40px;
+			font-size: 13px;
+			font-weight: 300;
+			line-height: 19px;
+			color: #333;
+			background-color: #fff;
+			border: 1px solid #ddd;
+
+			&:focus {
+				border-color: #aaa;
+				outline: none;
+			}
+		}
+
+		input {
+			max-width: 331px;
+		}
+
+		textarea {
+			padding: 20px;
+			min-height: 89px;
+			resize: vertical;
+		}
+
+		&-button {
+			display: flex;
+			justify-content: flex-end;
+			margin-top: 40px;
+
+			button {
+				padding: 0 20px;
+				min-width: 200px;
+				height: 40px;
+				font-size: 13px;
+				font-weight: 300;
+				color: #fff;
+				letter-spacing: 2px;
+				background-color: #3C59E5;
+				transition: all 0.3s;
+
+				i {
+					margin-left: 10px;
+				}
+
+				&:hover {
+					background-color: #3B53C4;
 				}
 			}
 		}

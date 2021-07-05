@@ -184,9 +184,46 @@
 			</article>
 
 			<article id="sec-contact" class="section sec-contact">
-				<div class="container">
-					<div class="row">
-						<div class="col-12">contactus</div>
+				<header class="sec-header blind">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">Contact Us</div>
+						</div>
+					</div>
+				</header>
+
+				<div class="sec-container">
+					<div class="container">
+						<div class="row">
+							<div class="col-6"><img src="./assets/images/sec-contact-vector.jpg" alt=""></div>
+
+							<div class="col-6">
+								<form class="form" onsubmit="return sendRequest(this);">
+									<fieldset>
+										<legend class="blind">프로젝트 의뢰하기</legend>
+
+										<div class="form-row form-row-username">
+											<label for="username">Company or Your-name</label>
+											<input name="username" id="username" type="text" placeholder="Company or Your-name">
+										</div>
+
+										<div class="form-row form-row-email">
+											<label for="email">Email</label>
+											<input name="email" id="email" type="email" placeholder="webmaster@example.com">
+										</div>
+
+										<div class="form-row form-row-message">
+											<label for="message">Messages</label>
+											<textarea name="message" id="message" placeholder="Please enter your request."></textarea>
+										</div>
+
+										<div class="form-row form-row-button">
+											<button type="submit">Send Request<i class="far fa-paper-plane"></i></button>
+										</div>
+									</fieldset>
+								</form>
+							</div>
+						</div>
 					</div>
 				</div>
 			</article>
@@ -219,7 +256,5 @@
 	<!-- script -->
 	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 	<script src="./assets/js/core.footer.js"></script>
-	<script>
-	</script>
 </body>
 </html>

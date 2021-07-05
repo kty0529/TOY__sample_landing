@@ -1,5 +1,7 @@
 (function() {
-	// header
+	/**
+	 * Header
+	 */
 	const header = {
 		elm: document.querySelector('#header'),
 		theme: '',
@@ -46,14 +48,20 @@
 	});
 
 	// header navigation
-	$('#header .nav a').on('click', function(e) {
-		e.preventDefault();
-		const target = $(this).attr('href');
-		header.anchor(target);
+	var header_link = document.querySelectorAll('#header .nav a');
+	header_link.forEach(function(elm, idx) {
+		elm.addEventListener('click', function(e) {
+			e.preventDefault();
+
+			const target = this.getAttribute('href');
+			header.anchor(target);
+		});
 	});
 
 
-	// section - slider
+	/**
+	 * section - slider
+	 */
 	const progress_bar = document.querySelector('.progress-bar');
 	const sec01_slider = new Swiper('.sec-slider .swiper-container', {
 		loop: true,
@@ -62,9 +70,10 @@
 		fadeEffect: {
 			crossFade: true
 		},
-		// autoplay: {
-		// 	delay: 1000
-		// },
+		speed: 1000,
+		autoplay: {
+			delay: 1500
+		},
 		on: {
 			init: function(swiper) {
 				header.sliderEvent(swiper);
@@ -75,7 +84,9 @@
 		}
 	});
 
-	// section - project
+	/**
+	 * section - project
+	 */
 	const sec02_project_action = function(slider) {
 		const zoomIn = document.querySelector('.sec-project .zoom-in');
 
@@ -121,7 +132,9 @@
 		}
 	});
 
-	// section - team
+	/**
+	 * section - team
+	 */
 	function tab(container) {
 		this.container  = document.querySelector(container);
 		this.navigation = this.container.querySelector('.tab-navigation');
@@ -154,13 +167,16 @@
 		return this.run();
 	}
 
+	// 탭 생성
 	const tabs = new tab('.tab-container');
 
-	$('[data-user]').each(function(idx, elm) {
-		let t       = $(elm);
-		let results = t.data().user.results;
-		let gender  = t.data().user.gender;
-		let lists   = t.find('.lists');
+	// 탭 내 ajax 반복
+	const user = document.querySelectorAll('[data-user]');
+	user.forEach(function(elm, idx) {
+		let dataSet = JSON.parse(elm.dataset.user);
+		let results = dataSet.results;
+		let gender  = dataSet.gender;
+		let lists   = elm.querySelector('.lists');
 		let position;
 
 		$.ajax({
@@ -171,6 +187,9 @@
 				'gender' : gender ? gender : '',
 			},
 			success: function(data) {
+				// 실 서비스에서는 console.log는 지워야합니다.
+				console.log(data);
+
 				let item = '';
 
 				for ( let i = 0; i < data.results.length; i++ ) {
@@ -229,8 +248,47 @@
 
 				}
 
-				lists.append(item);
+				lists.innerHTML = item;
 			}
 		});
 	})
+
+	/**
+	 * section - contactus
+	 */
+	window.sendRequest = function(form) {
+		// form 데이터 가져오기
+		const username = form.username;
+		const email = form.email;
+		const message = form.message;
+
+		// form 유효성 검사
+		if ( username.value == '' ) {
+			alert('Company or Your-name is required.');
+			username.focus();
+
+			return false;
+		}
+
+		if ( email.value == '' ) {
+			alert('Email is required.');
+			email.focus();
+
+			return false;
+		}
+
+		if ( message.value == '' ) {
+			alert('Message is required.');
+			message.focus();
+
+			return false;
+		}
+
+		// 메일 보내기
+		// mailto의 body 에서 내용 줄바꿈을 하려면 %0D%0A 을 사용하면 됩니다.
+		message.value = message.value.replace('\n', '%0D%0A');
+		window.open('mailto:kty0529@gmail.com?subject=[프로젝트 의뢰] Request Project&body=Company or Your-name: ' + username.value + '%0D%0AEmail: ' + email.value + '%0D%0AMessage: ' + message.value);
+
+		return false;
+	}
 })();
