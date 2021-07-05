@@ -1,10 +1,9 @@
-// base
-@import './base/typography';
-
-
 // helpers
 @import './helpers/mixins';
 @import './helpers/variables';
+
+// base
+@import './base/typography';
 
 
 // layouts
@@ -12,40 +11,3 @@
 @import './layouts/header';
 @import './layouts/footer';
 
-// pages
-#main {
-	flex: 1 1 auto;
-}
-
-.sec-slider {
-	background-color: #fff;
-
-	.swiper {
-		&-wrapper {
-			margin: 0;
-			padding: 0;
-			list-style: none;
-		}
-
-		&-slide {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			min-height: 800px;
-			height: 70vh;
-			background-size: cover;
-
-			&.has-overlay {
-				&::after {
-					content: '';
-					@include fullscreen();
-					background-color: rgba(0, 0, 0, 0.5);
-				}
-			}
-		}
-	}
-}
-
-.sec-team {
-	background-color: #f1f1f1;
-}
