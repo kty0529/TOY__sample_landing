@@ -155,4 +155,82 @@
 	}
 
 	const tabs = new tab('.tab-container');
+
+	$('[data-user]').each(function(idx, elm) {
+		let t       = $(elm);
+		let results = t.data().user.results;
+		let gender  = t.data().user.gender;
+		let lists   = t.find('.lists');
+		let position;
+
+		$.ajax({
+			url: 'https://randomuser.me/api/',
+			dataType: 'json',
+			data: {
+				'results': results,
+				'gender' : gender ? gender : '',
+			},
+			success: function(data) {
+				let item = '';
+
+				for ( let i = 0; i < data.results.length; i++ ) {
+					let output = data.results[i];
+					let rank;
+
+					switch (idx) {
+						case 0:
+							position = 'Designer';
+
+							switch (i) {
+								case 0: rank = 'Lead '; break;
+								case 1: rank = 'Senior '; break;
+								case 2: rank = 'Junior '; break;
+							}
+
+							break;
+
+						case 1:
+							position = 'Developer';
+
+							switch (i) {
+								case 0: rank = 'Senior '; break;
+								case 1: rank = 'Junior '; break;
+							}
+
+							break;
+
+						case 2:
+							position = 'Developer';
+							rank = 'Front-end ';
+							break;
+					}
+
+					item += '<li>';
+					item += '	<div class="user">';
+					item += '		<div class="user-thumb" style="background-image: url(\'' + output.picture.large + '\');"></div>';
+					item += '		<div class="user-name">';
+					item += '			<div class="name">' + output.name.last + ' ' + output.name.first + '</div>';
+					item += '			<div class="position">' + rank + position + '</div>';
+					item += '		</div>';
+					item += '		<div class="user-actions">';
+					item += '			<a class="action email" href="mailto:' + output.email + '"><i class="far fa-envelope"></i></a>';
+					item += '			<a class="action phone" href="tel:' + output.phone + '"><i class="fas fa-phone"></i></a>';
+					item += '			<a class="action gender" href="javascript:void(0);">';
+					// if ( output.gender == 'female' ) {
+					// 	item += '				<i class="fas fa-venus"></i>';
+					// } else {
+					// 	item += '				<i class="fas fa-mars"></i>';
+					// }
+					item += '				<i class="fas fa-' + ( output.gender == 'female' ? 'venus' : 'mars' ) + '"></i>';
+					item += '			</a>';
+					item += '		</div>';
+					item += '	</div>';
+					item += '</li>';
+
+				}
+
+				lists.append(item);
+			}
+		});
+	})
 })();
