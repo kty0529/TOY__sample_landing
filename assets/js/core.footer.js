@@ -84,6 +84,7 @@
 		}
 	});
 
+
 	/**
 	 * section - project
 	 */
@@ -132,10 +133,11 @@
 		}
 	});
 
+
 	/**
 	 * section - team
 	 */
-	function tab(container) {
+	var Tab = function(container) {
 		this.container  = document.querySelector(container);
 		this.navigation = this.container.querySelector('.tab-navigation');
 		this.wrapper    = this.container.querySelector('.tab-wrapper');
@@ -168,7 +170,7 @@
 	}
 
 	// 탭 생성
-	const tabs = new tab('.tab-container');
+	const tabs = new Tab('.tab-container');
 
 	// 탭 내 ajax 반복
 	const user = document.querySelectorAll('[data-user]');
@@ -252,6 +254,7 @@
 			}
 		});
 	})
+
 
 	/**
 	 * section - contactus
