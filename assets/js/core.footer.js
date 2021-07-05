@@ -120,4 +120,39 @@
 			}
 		}
 	});
+
+	// section - team
+	function tab(container) {
+		this.container  = document.querySelector(container);
+		this.navigation = this.container.querySelector('.tab-navigation');
+		this.wrapper    = this.container.querySelector('.tab-wrapper');
+
+		this.navAction = function(p) {
+			let btns = p.navigation.querySelectorAll('a');
+			btns.forEach(function(elm, idx) {
+				elm.addEventListener('click', function(e) {
+					e.preventDefault();
+					let target = elm.getAttribute('href');
+						target = target.replace('#', '');
+					let parent = elm.parentNode;
+
+					if ( ! parent.classList.contains('active') ) {
+						parent.parentNode.querySelector('.active').classList.remove('active');
+						parent.classList.add('active');
+
+						p.wrapper.querySelector('[data-tab-id].active').classList.remove('active');
+						p.wrapper.querySelector('[data-tab-id="'+target+'"]').classList.add('active');
+					}
+				})
+			});
+		}
+
+		this.run = function() {
+			this.navAction(this);
+		};
+
+		return this.run();
+	}
+
+	const tabs = new tab('.tab-container');
 })();

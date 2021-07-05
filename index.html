@@ -20,6 +20,8 @@
 	<link rel="stylesheet" href="./assets/css/reset.min.css">
 	<link rel="stylesheet" href="./assets/css/fixed-grid.min.css">
 	<link rel="stylesheet" href="./assets/css/core.min.css">
+
+	<!-- pages -->
 	<link rel="stylesheet" href="./assets/css/main.min.css">
 </head>
 
@@ -161,60 +163,16 @@
 									</div>
 
 									<div class="tab-wrapper">
-										<div class="tab-content">
-											<ol>
-												<li>
-													<div class="user">
-														<div class="user-thumb" style="background-image: url('//via.placeholder.com/200x200');"></div>
-														<div class="user-name">
-															<div class="name">Pispalan Valtatie</div>
-															<div class="position">Lead Designer</div>
-														</div>
-														<div class="user-actions">
-															<a class="email" href="#"><i class="far fa-envelope"></i></a>
-															<a class="phone" href="#"><i class="fas fa-phone"></i></a>
-															<a class="gender" href="#">
-																<i class="fas fa-venus"></i>
-																<i class="fas fa-mars"></i>
-															</a>
-														</div>
-													</div>
-												</li>
-												<li>
-													<div class="user">
-														<div class="user-thumb" style="background-image: url('//via.placeholder.com/200x200');"></div>
-														<div class="user-name">
-															<div class="name">Pispalan Valtatie</div>
-															<div class="position">Lead Designer</div>
-														</div>
-														<div class="user-actions">
-															<a class="email" href="#"><i class="far fa-envelope"></i></a>
-															<a class="phone" href="#"><i class="fas fa-phone"></i></a>
-															<a class="gender" href="#">
-																<i class="fas fa-venus"></i>
-																<i class="fas fa-mars"></i>
-															</a>
-														</div>
-													</div>
-												</li>
-												<li>
-													<div class="user">
-														<div class="user-thumb" style="background-image: url('//via.placeholder.com/200x200');"></div>
-														<div class="user-name">
-															<div class="name">Pispalan Valtatie</div>
-															<div class="position">Lead Designer</div>
-														</div>
-														<div class="user-actions">
-															<a class="email" href="#"><i class="far fa-envelope"></i></a>
-															<a class="phone" href="#"><i class="fas fa-phone"></i></a>
-															<a class="gender" href="#">
-																<i class="fas fa-venus"></i>
-																<i class="fas fa-mars"></i>
-															</a>
-														</div>
-													</div>
-												</li>
-											</ol>
+										<div data-tab-id="tab1" data-user='{"total": "3", "gender": "female"}' class="tab-content active">
+											<ol class="lists"></ol>
+										</div>
+
+										<div data-tab-id="tab2" data-user='{"total": "2", "gender": "all"}' class="tab-content">
+											<ol class="lists"></ol>
+										</div>
+
+										<div data-tab-id="tab3" data-user='{"total": "1", "gender": "all"}' class="tab-content">
+											<ol class="lists"></ol>
 										</div>
 									</div>
 								</div>
@@ -262,7 +220,83 @@
 	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 	<script src="./assets/js/core.footer.js"></script>
 	<script>
+		$('[data-user]').each(function(idx, elm) {
+			let t = $(elm);
+			let maxUserLength = t.data().user.total;
+			let gender = t.data().user.gender;
+			let lists = t.find('.lists');
+			let position;
 
+			$.ajax({
+				url: 'https://randomuser.me/api/',
+				dataType: 'json',
+				data: {
+					results: maxUserLength,
+					gender: (gender == 'female') ? 'female' : '',
+				},
+				success: function(data) {
+					let item = '';
+
+					for ( let i = 0; i < data.results.length; i++ ) {
+						let output = data.results[i];
+						let rank;
+
+						switch (idx) {
+							case 0:
+								position = 'Designer';
+
+								switch (i) {
+									case 0: rank = 'Lead '; break;
+									case 1: rank = 'Senior '; break;
+									case 2: rank = 'Junior '; break;
+								}
+
+								break;
+
+							case 1:
+								position = 'Developer';
+
+								switch (i) {
+									case 0: rank = 'Senior '; break;
+									case 1: rank = 'Junior '; break;
+								}
+
+								break;
+
+							case 2:
+								position = 'Developer';
+								rank = 'Front-end ';
+								break;
+						}
+
+						item += '<li>';
+						item += '	<div class="user">';
+						item += '		<div class="user-thumb" style="background-image: url(\'' + output.picture.large + '\');"></div>';
+						item += '		<div class="user-name">';
+						item += '			<div class="name">' + output.name.last + ' ' + output.name.first + '</div>';
+						item += '			<div class="position">' + rank + position + '</div>';
+						item += '		</div>';
+						item += '		<div class="user-actions">';
+						item += '			<a class="action email" href="mailto:' + output.email + '"><i class="far fa-envelope"></i></a>';
+						item += '			<a class="action phone" href="tel:' + output.phone + '"><i class="fas fa-phone"></i></a>';
+						item += '			<a class="action gender" href="javascript:void(0);">';
+						// if ( output.gender == 'female' ) {
+						// 	item += '				<i class="fas fa-venus"></i>';
+						// } else {
+						// 	item += '				<i class="fas fa-mars"></i>';
+						// }
+						item += '				<i class="fas fa-' + ( output.gender == 'female' ? 'venus' : 'mars' ) + '"></i>';
+						item += '			</a>';
+						item += '		</div>';
+						item += '	</div>';
+						item += '</li>';
+
+					}
+
+					lists.append(item);
+				}
+			});
+		})
 	</script>
 </body>
 </html>
