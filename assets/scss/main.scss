@@ -242,5 +242,33 @@
 
 	.sec-container {
 		margin-top: 60px;
+
+		.tab-content {
+			ol {
+				display: flex;
+				margin: 0;
+				padding: 0;
+				height: 100%;
+				list-style: none;
+			}
+
+			li {
+				flex: 0 0 auto;
+				position: relative;
+				padding: 40px 15px 10px;
+				width: calc(100% / 3);
+
+				&:not(:last-child) {
+					&:after {
+						content: '';
+						@include position('vertical');
+						right: 0;
+						width: 1px;
+						height: 100px;
+						background-color: #ddd;
+					}
+				}
+			}
+		}
 	}
 }
