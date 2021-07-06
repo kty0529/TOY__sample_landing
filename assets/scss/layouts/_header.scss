@@ -41,7 +41,7 @@
 		}
 	}
 
-	&.dark {
+	&[data-header-theme="dark"] {
 		color: #555;
 	}
 

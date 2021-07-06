@@ -8,8 +8,10 @@
 }
 
 .sec-slider {
+	position: relative;
 	background-color: #fff;
 
+	// slider
 	.swiper-wrapper {
 		margin: 0;
 		padding: 0;
@@ -93,6 +95,88 @@
 				font-weight: 100;
 				line-height: 34px;
 				letter-spacing: 2px;
+			}
+		}
+	}
+
+	// progress
+	.progress-container {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		z-index: 5;
+		width: 100%;
+
+		.controls {
+			display: none;
+			position: relative;
+			width: 40px;
+			height: 40px;
+			font-size: 16px;
+			color: #fff;
+			transition: all 0.3s;
+
+			i {
+				@include disable(true);
+			}
+
+			&::after {
+				@include position('vertical');
+				@include disable(true);
+				display: none;
+				content: attr(aria-label);
+				left: 100%;
+				align-items: center;
+				padding: 0 11px;
+				height: 25px;
+				font-size: 12px;
+				color: #fff;
+				line-height: 16px;
+				white-space: nowrap;
+				background-color: #000;
+				border-radius: 3px;
+			}
+
+			&::before {
+				@include position('vertical');
+				@include disable(true);
+				content: '';
+				display: none;
+				left: calc(100% - 2px);
+				width: 4px;
+				height: 4px;
+				background-color: #000;
+				transform: rotate(45deg);
+			}
+
+			&:hover::before,
+			&:hover::after {
+				display: flex;
+			}
+
+			&.active {
+				display: block;
+			}
+		}
+
+		.progress-bar {
+			.bar {
+				max-width: 100%;
+				width: 0;
+				height: 5px;
+				background-color: rgba(255, 255, 255, 0.5);
+			}
+		}
+	}
+
+	[data-slider-theme="dark"] ~ .progress-container {
+		.controls {
+			color: #555;
+		}
+
+		.progress-bar {
+			.bar {
+				background-color: rgba(0, 0, 0, 0.15);
 			}
 		}
 	}

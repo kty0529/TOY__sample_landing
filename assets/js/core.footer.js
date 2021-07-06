@@ -1,4 +1,4 @@
-(function() {
+(sample_landing = function() {
 	/**
 	 * Header
 	 */
@@ -6,7 +6,7 @@
 		elm: document.querySelector('#header'),
 		theme: '',
 		sliderEvent: function(slider) {
-			// 슬라이더 init, change 이벤트에 따른 액션
+			// 슬라이더 init, slideChange 이벤트에 따른 액션
 			const t = this;
 
 			let activeSlider = slider.slides[ slider.activeIndex ];
@@ -15,20 +15,21 @@
 			t.theme = getHeaderTheme;
 
 			if ( ! t.elm.classList.contains('fixed') ) {
-				t.elm.removeAttribute('class');
-				t.elm.classList.add(t.theme);
+				t.elm.setAttribute('data-header-theme', t.theme);
 			}
 		},
 		scrollEvent: function() {
-			// 스크롤 위치에 따라 header class 추가
+			// 스크롤 위치에 따라 header에 fixed 추가
 			const t = this;
 
 			if ( window.scrollY > 100 ) {
 				t.elm.classList.add('fixed');
 			} else {
-				t.elm.removeAttribute('class');
+				t.elm.classList.remove('fixed');
+
+				// fixed가 풀렸을 때, 슬라이더의 변화에 맞게 헤더 테마 변경
 				if ( t.theme != '' ) {
-					t.elm.classList.add(t.theme);
+					t.elm.setAttribute('data-header-theme', t.theme);
 				}
 			}
 		},
@@ -62,7 +63,48 @@
 	/**
 	 * section - slider
 	 */
-	const progress_bar = document.querySelector('.progress-bar');
+	const progress_container = document.querySelector('.progress-container');
+	const buttons = progress_container.querySelector('.buttons');
+	buttons.addEventListener('click', function(e) {
+		let t = e.target;
+
+		if ( t.classList.contains('stop') ) {
+			sec01_slider.autoplay.stop();
+			t.classList.remove('active');
+			t.parentNode.querySelector('.play').classList.add('active');
+		}
+
+		if ( t.classList.contains('play') ) {
+			sec01_slider.autoplay.start();
+			t.classList.remove('active');
+			t.parentNode.querySelector('.stop').classList.add('active');
+		}
+	});
+
+	const autoplay_delay = 1000;
+	// let stopWidth = 0;
+	function progress_act(swiper, progress) {
+		var container = document.querySelector('.progress-container');
+		var elm = container.querySelector('.progress-bar .bar');
+		var width = 1;
+		var playTime = autoplay_delay / 100;
+		var interval;
+
+		var frame = function() {
+			if ( width >= 100 ) {
+				clearInterval(interval);
+			} else {
+				width++;
+				elm.style.width = width + '%';
+			}
+
+			stopWidth = width;
+			console.log(stopWidth);
+		}
+
+		interval = setInterval(frame, playTime);
+	}
+
 	const sec01_slider = new Swiper('.sec-slider .swiper-container', {
 		loop: true,
 		slidesPerView: 1,
@@ -71,15 +113,37 @@
 			crossFade: true
 		},
 		speed: 1000,
+		parallax: true,
+		watchSlidesProgress: true,
 		autoplay: {
-			delay: 1500
+			delay: autoplay_delay
 		},
 		on: {
 			init: function(swiper) {
+				// 헤더 관련 슬라이더 이벤트
 				header.sliderEvent(swiper);
+
+				// 프로그래스바 기본 버튼 액션
+				let theme = swiper.slides[ swiper.activeIndex ].dataset.headerTheme;
+				swiper.el.setAttribute('data-slider-theme', theme);
 			},
 			slideChange: function(swiper) {
+				// 헤더 관련 슬라이더 이벤트
 				header.sliderEvent(swiper);
+
+				// 프로그래스바 기본 버튼 액션
+				let theme = swiper.slides[ swiper.activeIndex ].dataset.headerTheme;
+				swiper.el.setAttribute('data-slider-theme', theme);
+			},
+			touchStart: function(swiper) {
+				// 사용자가 슬라이더 이동 시 프로그래스바 버튼 변경
+				if ( buttons.querySelector('.active').classList.contains('stop') ) {
+					buttons.querySelector('.stop').classList.remove('active');
+					buttons.querySelector('.play').classList.add('active');
+				}
+			},
+			progress: function(swiper, progress) {
+				// progress_act(swiper, progress);
 			}
 		}
 	});
@@ -189,8 +253,7 @@
 				'gender' : gender ? gender : '',
 			},
 			success: function(data) {
-				// 실 서비스에서는 console.log는 지워야합니다.
-				console.log(data);
+				// console.log(data);
 
 				let item = '';
 
