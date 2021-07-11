@@ -83,7 +83,8 @@
 
 	const autoplay_delay = 1000;
 	// let stopWidth = 0;
-	function progress_act(swiper, progress) {
+	// 만들어야함 ㅠㅠ
+	/* function progress_act(swiper, progress) {
 		var container = document.querySelector('.progress-container');
 		var elm = container.querySelector('.progress-bar .bar');
 		var width = 1;
@@ -103,7 +104,7 @@
 		}
 
 		interval = setInterval(frame, playTime);
-	}
+	} */
 
 	const sec01_slider = new Swiper('.sec-slider .swiper-container', {
 		loop: true,
