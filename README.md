@@ -17,12 +17,11 @@ HTML, JavaScript, SASS 등을 종합적으로 연습하기 위한 샘플 랜딩 
 4. JavaScript
 
 ## 외부 리소스
-1. [jQuery](https://jquery.com)
-2. [Font Awesome 5 Free](https://fontawesome.com)
-3. [Swiperjs](https://swiperjs.com)
-4. [Vecteezy](https://www.vecteezy.com/free-vector/website)
-5. [Unsplash](https://unsplash.com/)
-6. [Random User Generator API](https://randomuser.me)
+1. [Font Awesome 5 Free](https://fontawesome.com)
+2. [Swiperjs](https://swiperjs.com)
+3. [Vecteezy](https://www.vecteezy.com/free-vector/website)
+4. [Unsplash](https://unsplash.com/)
+5. [Random User Generator API](https://randomuser.me)
 
 ## 내부 리소스 관련 저장소
 1. [Reset CSS](https://github.com/kty0529/Reset-CSS)
