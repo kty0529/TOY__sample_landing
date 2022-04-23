@@ -36,9 +36,7 @@
 		anchor: function(target) {
 			// gnb 메뉴 클릭 시 anchor 이동
 			target = target.replace('#', '#sec-');
-			$('html, body').animate({
-				scrollTop: $(target).offset().top
-			}, 500);
+			document.querySelector(target).scrollIntoView({behavior: 'smooth'});
 		}
 	}
 
