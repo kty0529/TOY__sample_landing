@@ -81,31 +81,6 @@
 		}
 	});
 
-	const autoplay_delay = 1000;
-	// let stopWidth = 0;
-	// 만들어야함 ㅠㅠ
-	/* function progress_act(swiper, progress) {
-		var container = document.querySelector('.progress-container');
-		var elm = container.querySelector('.progress-bar .bar');
-		var width = 1;
-		var playTime = autoplay_delay / 100;
-		var interval;
-
-		var frame = function() {
-			if ( width >= 100 ) {
-				clearInterval(interval);
-			} else {
-				width++;
-				elm.style.width = width + '%';
-			}
-
-			stopWidth = width;
-			console.log(stopWidth);
-		}
-
-		interval = setInterval(frame, playTime);
-	} */
-
 	const sec01_slider = new Swiper('.sec-slider .swiper-container', {
 		loop: true,
 		slidesPerView: 1,
@@ -117,7 +92,7 @@
 		parallax: true,
 		watchSlidesProgress: true,
 		autoplay: {
-			delay: autoplay_delay
+			delay: 1000
 		},
 		on: {
 			init: function(swiper) {
@@ -143,9 +118,6 @@
 					buttons.querySelector('.play').classList.add('active');
 				}
 			},
-			progress: function(swiper, progress) {
-				// progress_act(swiper, progress);
-			}
 		}
 	});
 
@@ -177,9 +149,6 @@
 		slidesPerView: 1,
 		loopAdditionalSlides: 6,
 		spaceBetween: 15,
-		// allowTouchMove: false,
-		// slideToClickedSlide: true,
-		// grabCursor: true,
 		navigation: {
 			prevEl: '.sec-project .slider-navigation .prev',
 			nextEl: '.sec-project .slider-navigation .next',
@@ -301,11 +270,6 @@
 					item += '			<a class="action email" href="mailto:' + output.email + '"><i class="far fa-envelope"></i></a>';
 					item += '			<a class="action phone" href="tel:' + output.phone + '"><i class="fas fa-phone"></i></a>';
 					item += '			<a class="action gender" href="javascript:void(0);">';
-					// if ( output.gender == 'female' ) {
-					// 	item += '				<i class="fas fa-venus"></i>';
-					// } else {
-					// 	item += '				<i class="fas fa-mars"></i>';
-					// }
 					item += '				<i class="fas fa-' + ( output.gender == 'female' ? 'venus' : 'mars' ) + '"></i>';
 					item += '			</a>';
 					item += '		</div>';
