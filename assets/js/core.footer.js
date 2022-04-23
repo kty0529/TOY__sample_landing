@@ -158,80 +158,78 @@
 	// 탭 내 ajax 반복
 	const user = document.querySelectorAll('[data-user]');
 	user.forEach(function(elm, idx) {
-		let dataSet = JSON.parse(elm.dataset.user);
-		let results = dataSet.results;
-		let gender  = dataSet.gender;
-		let lists   = elm.querySelector('.lists');
+		const dataSet = JSON.parse(elm.dataset.user);
+		const results = dataSet.results;
+		const gender = dataSet.gender;
+		const lists = elm.querySelector('.lists');
 		let position;
 
-		$.ajax({
-			url: 'https://randomuser.me/api/',
-			dataType: 'json',
-			data: {
-				'results': results,
-				'gender' : gender ? gender : '',
-			},
-			success: function(data) {
-				// console.log(data);
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = () => {
+			if (xhr.readyState === xhr.DONE) {
+				if (xhr.status === 200 || xhr.status === 201) {
+					const data = JSON.parse(xhr.response);
 
-				let item = '';
+					let item = ''; // string 으로 초기화
 
-				for ( let i = 0; i < data.results.length; i++ ) {
-					let output = data.results[i];
-					let rank;
+					for ( let i = 0; i < data.results.length; i++ ) {
+						const output = data.results[i];
+						let rank;
 
-					switch (idx) {
-						case 0:
-							position = 'Designer';
+						switch (idx) {
+							case 0:
+								position = 'Designer';
 
-							switch (i) {
-								case 0: rank = 'Lead '; break;
-								case 1: rank = 'Senior '; break;
-								case 2: rank = 'Junior '; break;
-							}
-
+								switch (i) {
+									case 0: rank = 'Lead '; break;
+									case 1: rank = 'Senior '; break;
+									case 2: rank = 'Junior '; break;
+								}
 							break;
 
-						case 1:
-							position = 'Developer';
+							case 1:
+								position = 'Developer';
 
-							switch (i) {
-								case 0: rank = 'Senior '; break;
-								case 1: rank = 'Junior '; break;
-							}
-
+								switch (i) {
+									case 0: rank = 'Senior '; break;
+									case 1: rank = 'Junior '; break;
+								}
 							break;
 
-						case 2:
-							position = 'Developer';
-							rank = 'Front-end ';
+							case 2:
+								position = 'Developer';
+								rank = 'Front-end ';
 							break;
+						}
+
+						item += `<li>
+											<div class="user">
+												<div class="user-thumb" style="background-image: url(${output.picture.large});"></div>
+													<div class="user-name">
+														<div class="name">${output.name.last} ${output.name.first}</div>
+														<div class="position">${rank}${position}</div>
+													</div>
+													<div class="user-actions">
+														<a class="action email" href="mailto:${output.email}"><i class="far fa-envelope"></i></a>
+														<a class="action phone" href="tel:${output.phone}"><i class="fas fa-phone"></i></a>
+														<a class="action gender" href="javascript:void(0);">
+															<i class="fas fa-${output.gender == 'female' ? 'venus' : 'mars'}"></i>
+														</a>
+													</div>
+												</div>
+										</li>`;
 					}
 
-					item += '<li>';
-					item += '	<div class="user">';
-					item += '		<div class="user-thumb" style="background-image: url(\'' + output.picture.large + '\');"></div>';
-					item += '		<div class="user-name">';
-					item += '			<div class="name">' + output.name.last + ' ' + output.name.first + '</div>';
-					item += '			<div class="position">' + rank + position + '</div>';
-					item += '		</div>';
-					item += '		<div class="user-actions">';
-					item += '			<a class="action email" href="mailto:' + output.email + '"><i class="far fa-envelope"></i></a>';
-					item += '			<a class="action phone" href="tel:' + output.phone + '"><i class="fas fa-phone"></i></a>';
-					item += '			<a class="action gender" href="javascript:void(0);">';
-					item += '				<i class="fas fa-' + ( output.gender == 'female' ? 'venus' : 'mars' ) + '"></i>';
-					item += '			</a>';
-					item += '		</div>';
-					item += '	</div>';
-					item += '</li>';
-
+					lists.innerHTML = item;
+				} else {
+					console.error(xhr.response);
 				}
-
-				lists.innerHTML = item;
 			}
-		});
-	})
+    };
 
+    xhr.open('GET', `https://randomuser.me/api/?results=${results}&gender=${gender}`);
+    xhr.send();
+	});
 
 	/**
 	 * section - contactus
