@@ -285,11 +285,11 @@
 	/**
 	 * section - contactus
 	 */
-	window.sendRequest = function(form) {
-		// form 데이터 가져오기
-		const username = form.username;
-		const email = form.email;
-		const message = form.message;
+	document.querySelector('.sec-contact form').onsubmit = (event) => {
+		// form 엘리먼트 가져오기
+		const username = event.target.elements.username;
+		const email = event.target.elements.email;
+		const message = event.target.elements.message;
 
 		// form 유효성 검사
 		if ( username.value == '' ) {
@@ -316,7 +316,7 @@
 		// 메일 보내기
 		// mailto의 body 에서 내용 줄바꿈을 하려면 %0D%0A 을 사용하면 됩니다.
 		message.value = message.value.replace('\n', '%0D%0A');
-		window.open('mailto:kty0529@gmail.com?subject=[프로젝트 의뢰] Request Project&body=Company or Your-name: ' + username.value + '%0D%0AEmail: ' + email.value + '%0D%0AMessage: ' + message.value);
+		window.open('mailto:kty0529@gmail.com?subject=[프로젝트 의뢰] Request Project&body=Company or Your-name: ' + username.value + '%0D%0AEmail: ' + email.value + '%0D%0AMessage: ' + message.value, '_blank');
 
 		return false;
 	}
