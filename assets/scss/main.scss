@@ -127,7 +127,6 @@
 	.sec-container {
 		margin-top: 60px;
 
-		// zoom-in
 		.zoom-in {
 			position: relative;
 			height: 320px;
@@ -182,14 +181,17 @@
 			}
 		}
 
-		// swiper
 		.slider-area {
-			padding-top: 60px;
-			overflow: hidden;
+			margin-top: 60px;
+
+			&:hover .slider-navigation {
+				opacity: 1;
+				visibility: visible;
+			}
 		}
 
 		.slider-inner {
-			width: 200px;
+			overflow: hidden;
 		}
 
 		.swiper-container {
@@ -207,7 +209,15 @@
 			background-size: cover;
 			background-position: top left;
 			border: 1px solid #ddd;
-			cursor: pointer;
+
+			img {
+				min-width: 100%;
+				min-height: 100%;
+				object-fit: cover;
+				object-position: top center;
+				pointer-events: none;
+				touch-action: none;
+			}
 
 			&-active {
 				border-color: #555;
@@ -216,6 +226,10 @@
 
 		.slider-navigation {
 			position: relative;
+			z-index: 2;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.2s, visibility 0.2s;
 
 			.arrows {
 				position: absolute;

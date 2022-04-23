@@ -81,41 +81,37 @@
 	/**
 	 * section - project
 	 */
-	const sec02_project_action = function(slider) {
-		const zoomIn = document.querySelector('.sec-project .zoom-in');
+	const sec02_project_action = function(data, image) {
+		const zoomInDom = document.querySelector('.sec-project .zoom-in');
 
-		let activeSlider = slider.slides[ slider.activeIndex ];
-		let data = JSON.parse( activeSlider.dataset.set );
-		let title = data.title;
-		let desc = data.desc;
-		let url = data.url;
-
-		// zoom-in 엘리먼트에 변경될 값 적용
-		zoomIn.querySelector('.title').innerHTML = title;
-		zoomIn.querySelector('.desc').innerHTML = desc;
-		zoomIn.querySelector('.external').setAttribute('href', url);
-		zoomIn.style.backgroundImage = getComputedStyle(activeSlider).backgroundImage;
+		zoomInDom.querySelector('.title').innerHTML = data.title;
+		zoomInDom.querySelector('.desc').innerHTML = data.desc;
+		zoomInDom.querySelector('.external').setAttribute('href', data.url);
+		zoomInDom.style.backgroundImage = `url('${image}')`;
 	}
 
 	const sec02_project_slider = new Swiper('.sec-project .slider-area .swiper-container', {
 		loop: true,
-		slidesPerView: 1,
+		slidesPerView: 2.7116,
 		loopAdditionalSlides: 6,
 		spaceBetween: 15,
 		navigation: {
-			prevEl: '.sec-project .slider-navigation .prev',
 			nextEl: '.sec-project .slider-navigation .next',
 		},
 		on: {
-			init: function(swiper) {
-				sec02_project_action(swiper);
+			init: function() {
+				const activeSlider = this.slides[ this.activeIndex ];
+				const data = JSON.parse( activeSlider.dataset.set );
+				const image = activeSlider.querySelector('img').src;
+
+				sec02_project_action(data, image);
 			},
-			slideChange: function(swiper) {
-				sec02_project_action(swiper);
-			},
-			click: function(swiper, event) {
-				let index = parseInt( event.target.dataset.swiperSlideIndex );
-				swiper.slideToLoop(index);
+			slideChange: function() {
+				const activeSlider = this.slides[ this.activeIndex ];
+				const data = JSON.parse( activeSlider.dataset.set );
+				const image = activeSlider.querySelector('img').src;
+
+				sec02_project_action(data, image);
 			}
 		}
 	});
