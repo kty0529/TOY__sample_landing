@@ -47,7 +47,7 @@
 	});
 
 	// header navigation
-	var header_link = document.querySelectorAll('#header .nav a');
+	const header_link = document.querySelectorAll('#header .nav a');
 	header_link.forEach(function(elm, idx) {
 		elm.addEventListener('click', function(e) {
 			e.preventDefault();
@@ -61,60 +61,18 @@
 	/**
 	 * section - slider
 	 */
-	const progress_container = document.querySelector('.progress-container');
-	const buttons = progress_container.querySelector('.buttons');
-	buttons.addEventListener('click', function(e) {
-		let t = e.target;
-
-		if ( t.classList.contains('stop') ) {
-			sec01_slider.autoplay.stop();
-			t.classList.remove('active');
-			t.parentNode.querySelector('.play').classList.add('active');
-		}
-
-		if ( t.classList.contains('play') ) {
-			sec01_slider.autoplay.start();
-			t.classList.remove('active');
-			t.parentNode.querySelector('.stop').classList.add('active');
-		}
-	});
-
 	const sec01_slider = new Swiper('.sec-slider .swiper-container', {
 		loop: true,
 		slidesPerView: 1,
 		effect: 'fade',
-		fadeEffect: {
-			crossFade: true
-		},
 		speed: 1000,
-		parallax: true,
-		watchSlidesProgress: true,
-		autoplay: {
-			delay: 1000
-		},
+		autoplay: true,
 		on: {
 			init: function(swiper) {
-				// 헤더 관련 슬라이더 이벤트
 				header.sliderEvent(swiper);
-
-				// 프로그래스바 기본 버튼 액션
-				let theme = swiper.slides[ swiper.activeIndex ].dataset.headerTheme;
-				swiper.el.setAttribute('data-slider-theme', theme);
 			},
 			slideChange: function(swiper) {
-				// 헤더 관련 슬라이더 이벤트
 				header.sliderEvent(swiper);
-
-				// 프로그래스바 기본 버튼 액션
-				let theme = swiper.slides[ swiper.activeIndex ].dataset.headerTheme;
-				swiper.el.setAttribute('data-slider-theme', theme);
-			},
-			touchStart: function(swiper) {
-				// 사용자가 슬라이더 이동 시 프로그래스바 버튼 변경
-				if ( buttons.querySelector('.active').classList.contains('stop') ) {
-					buttons.querySelector('.stop').classList.remove('active');
-					buttons.querySelector('.play').classList.add('active');
-				}
 			},
 		}
 	});
@@ -131,9 +89,6 @@
 		let title = data.title;
 		let desc = data.desc;
 		let url = data.url;
-		let image = getComputedStyle(activeSlider).backgroundImage;
-		// 이미지 경로만 남아야 할 경우 slice를 사용해 불필요한 문자열 제거
-		// image = image.slice(5, -2)
 
 		// zoom-in 엘리먼트에 변경될 값 적용
 		zoomIn.querySelector('.title').innerHTML = title;
