@@ -13,8 +13,8 @@ HTML, JavaScript, SASS 등을 종합적으로 연습하기 위한 샘플 랜딩 
 ## 개발 언어
 1. HTML5
 2. CSS3
-3. SASS(SCSS)
-4. JavaScript(and jQuery)
+3. SCSS
+4. JavaScript
 
 ## 외부 리소스
 1. [jQuery](https://jquery.com)
