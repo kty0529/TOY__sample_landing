@@ -4,7 +4,7 @@ HTML, JavaScript, SASS 등을 종합적으로 연습하기 위한 샘플 랜딩 
 피그마 시안과 랜딩 미리보기를 통해 샘플 랜딩을 확인하여 만들어보세요.
 
 ## 디자인
-- 디자인 : [Figma Share](https://www.figma.com/file/Uv57BQbzSSKoixVRVLpw7M/coding-agency?node-id=0%3A1)
+- 디자인 : [Figma Share](https://www.figma.com/file/Uv57BQbzSSKoixVRVLpw7M/%5BTOY%5D-Sample-Landing?node-id=1202%3A14)
 - 미리보기 : [https://kty0529.github.io/TOY__sample_landing/](https://kty0529.github.io/TOY__sample_landing/)
 
 디자인 및 데모 개발 : [wallel](https://wallel.com)
