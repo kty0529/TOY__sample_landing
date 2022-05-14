@@ -1,7 +1,3 @@
-/**
-* Reset CSS - https://wallel.com
-*/
-
 *, ::before, ::after {
 	box-sizing: border-box;
 }
@@ -160,21 +156,19 @@ h1, h2, h3, h4, h5, h6 {
 	clear: both;
 }
 
-/**
-  * For modern browsers
-  * 1. The space content is one way to avoid an Opera bug when the
-  *    contenteditable attribute is included anywhere else in the document.
-  *    Otherwise it causes space to appear at the top and bottom of elements
-  *    that are clearfixed.
-  * 2. The use of `table` rather than `block` is only necessary if using
-  *    `:before` to contain the top-margins of child elements.
-  * https://stackoverflow.com/questions/29444935/what-does-this-combination-of-before-after-and-displaytable-do
-  */
+// For modern browsers
+// 1. The space content is one way to avoid an Opera bug when the
+//    contenteditable attribute is included anywhere else in the document.
+//    Otherwise it causes space to appear at the top and bottom of elements
+//    that are clearfixed.
+// 2. The use of `table` rather than `block` is only necessary if using
+//    `:before` to contain the top-margins of child elements.
+// https://stackoverflow.com/questions/29444935/what-does-this-combination-of-before-after-and-displaytable-do
 .clearfix {
 	&:before,
 	&:after {
-		content: ' '; /* 1 */
-		display: table; /* 2 */
+		content: ' '; // 1
+		display: table; // 2
 	}
 
 	&:after {

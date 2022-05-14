@@ -15,6 +15,35 @@
 	}
 }
 
+@mixin tablet($width: '') {
+	@if $width == '' {
+		$width: $tablet;
+	}
+
+	@include max-w($width) {
+		@content;
+	}
+}
+
+@mixin mobile($width: '') {
+	@if $width == '' {
+		$width: $mobile;
+	}
+
+	@include max-w($width) {
+		@content;
+	}
+}
+
+@mixin small($width: '') {
+	@if $width == '' {
+		$width: $small;
+	}
+
+	@include max-w($width) {
+		@content;
+	}
+}
 
 // 포지션 관련
 @mixin fullscreen($z: 1, $p: 'absolute') {
@@ -58,16 +87,6 @@
 	}
 }
 
-// 크로스 브라우징
-// https://unto.kr/blog/coding-info/only-ie-css/
-@mixin IE {
-	/* IE10+ */
-	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-		@content;
-	}
-}
-
-
 // 기타 mixin
 @mixin clearfix {
 	&:after {
@@ -88,24 +107,6 @@
 		user-select: auto;
 		pointer-events: auto;
 		touch-action: auto;
-	}
-}
-
-@mixin placeholder {
-	&::-webkit-input-placeholder {
-		@content;
-	}
-	&::-moz-placeholder {
-		@content;
-	}
-	&:-ms-input-placeholder {
-		@content;
-	}
-	&:-moz-placeholder {
-		@content;
-	}
-	&::placeholder {
-		@content;
 	}
 }
 

@@ -1,9 +1,17 @@
+@use 'sass:math';
+
+// 기본 값 덮어쓰기
+$container: 1024px;
+$ff-default: 'Noto Sans KR', sans-serif;
+
 // helpers
-@import './helpers/mixins';
-@import './helpers/variables';
+@import './helpers/index';
 
 // base
+@import './base/reset';
+@import './base/grid';
 @import './base/typography';
+@import './base/colors';
 
 
 // layouts
@@ -14,3 +22,4 @@
 // components
 @import './components/tab';
 @import './components/user';
+

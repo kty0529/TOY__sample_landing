@@ -1,4 +1,6 @@
-html, body {
-	font-size: 16px;
-	font-family: 'Noto Sans KR', sans-serif;
+html,
+body {
+	font-size: rem-calc(16);
+	font-family: $ff-default;
+	color: map-get($theme-colors, 'dark');
 }
