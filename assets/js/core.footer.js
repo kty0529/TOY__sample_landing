@@ -1,59 +1,62 @@
 (sample_landing = function() {
-  /**
-   * Header
-   */
-  const header = {
-    elm: document.querySelector('#header'),
-    theme: '',
-    sliderEvent: function(slider) {
-      // 슬라이더 init, slideChange 이벤트에 따른 액션
+  const elm = {
+    header: document.querySelector('#header'),
+    secSlider: document.querySelector('.sec-slider')
+  }
+
+  const theme = {
+    color: 'light',
+    slideChange: function(slider) {
+      // 슬라이드가 변경될 때에 따라 헤더의 테마를 변경해줍니다.
       const t = this;
 
       let activeSlider = slider.slides[ slider.activeIndex ];
-      let getHeaderTheme = activeSlider.dataset.headerTheme;
+      let sliderTheme = activeSlider.dataset.sliderTheme;
 
-      t.theme = getHeaderTheme;
+      t.color = sliderTheme;
+      elm.secSlider.dataset.theme = t.color;
 
-      if ( ! t.elm.classList.contains('fixed') ) {
-        t.elm.setAttribute('data-header-theme', t.theme);
+      if ( ! elm.header.classList.contains('fixed') ) {
+        elm.header.dataset.sliderTheme = t.color;
       }
-    },
+    }
+  };
+
+  /**
+   * 헤더 제어
+   */
+  const header = {
     scrollEvent: function() {
       // 스크롤 위치에 따라 header에 fixed 추가
       const t = this;
 
       if ( window.scrollY > 100 ) {
-        t.elm.classList.add('fixed');
+        elm.header.classList.add('fixed');
       } else {
-        t.elm.classList.remove('fixed');
+        elm.header.classList.remove('fixed');
 
         // fixed가 풀렸을 때, 슬라이더의 변화에 맞게 헤더 테마 변경
-        if ( t.theme != '' ) {
-          t.elm.setAttribute('data-header-theme', t.theme);
+        if ( theme.color != '' ) {
+          elm.header.dataset.sliderTheme = theme.color;
         }
       }
-    },
-    anchor: function(target) {
-      // gnb 메뉴 클릭 시 anchor 이동
-      target = target.replace('#', '#sec-');
-      document.querySelector(target).scrollIntoView({behavior: 'smooth'});
     }
   }
 
-  // header scroll
+  // 헤더 스크롤 이벤트
   header.scrollEvent();
   window.addEventListener('scroll', function(e) {
     header.scrollEvent();
   });
 
-  // header navigation
-  const header_link = document.querySelectorAll('#header .nav a');
-  header_link.forEach(function(elm, idx) {
+  // 헤더 네비게이션 이벤트
+  const header_link = document.querySelectorAll('#header .navigation a');
+  header_link.forEach(function(elm) {
     elm.addEventListener('click', function(e) {
       e.preventDefault();
 
-      const target = this.getAttribute('href');
-      header.anchor(target);
+      const sectionId = this.getAttribute('href');
+      document.querySelector(sectionId).scrollIntoView({behavior: 'smooth'});
     });
   });
 
@@ -61,18 +64,30 @@
   /**
    * section - slider
    */
-  const sec01_slider = new Swiper('.sec-slider .swiper-container', {
-    loop: true,
+  const sec01_slider = new Swiper('.sec-slider .swiper', {
+    loop: false,
     slidesPerView: 1,
-    effect: 'fade',
+    autoplay: {
+      delay: 3000,
+    },
+    allowTouchMove: false,
+    parallax: true,
     speed: 1000,
-    autoplay: true,
+    pagination: {
+      el: '.sec-slider .pagination .container',
+      bulletClass: 'pagination-bullet',
+      bulletActiveClass: 'pagination-bullet-active',
+      clickable: true,
+      renderBullet: function(index, className) {
+        return '<button class="' + className + ' ' + ( className + ( '0' + ( index + 1 ) ) ) + '"></button>';
+      }
+    },
     on: {
       init: function(swiper) {
-        header.sliderEvent(swiper);
+        theme.slideChange(swiper);
       },
       slideChange: function(swiper) {
-        header.sliderEvent(swiper);
+        theme.slideChange(swiper);
       },
     }
   });
@@ -90,7 +105,7 @@
     zoomInDom.style.backgroundImage = `url('${image}')`;
   }
 
-  const sec02_project_slider = new Swiper('.sec-project .slider-area .swiper-container', {
+  const sec02_project_slider = new Swiper('.sec-project .slider-area .swiper', {
     loop: true,
     slidesPerView: 2.7116,
     loopAdditionalSlides: 6,
@@ -127,11 +142,10 @@
 
     this.navAction = function(p) {
       let btns = p.navigation.querySelectorAll('a');
-      btns.forEach(function(elm, idx) {
+      btns.forEach(function(elm) {
         elm.addEventListener('click', function(e) {
           e.preventDefault();
-          let target = elm.getAttribute('href');
-            target = target.replace('#', '');
+          let target = elm.getAttribute('href').replace('#', '');
           let parent = elm.parentNode;
 
           if ( ! parent.classList.contains('active') ) {
@@ -210,11 +224,11 @@
                             <div class="position">${rank}${position}</div>
                           </div>
                           <div class="user-actions">
-                            <a class="action email" href="mailto:${output.email}"><i class="far fa-envelope"></i></a>
-                            <a class="action phone" href="tel:${output.phone}"><i class="fas fa-phone"></i></a>
-                            <a class="action gender" href="javascript:void(0);">
-                              <i class="fas fa-${output.gender == 'female' ? 'venus' : 'mars'}"></i>
-                            </a>
+                            <a class="action email" href="mailto:${output.email}"><span class="material-symbols-outlined icon">outgoing_mail</span></a>
+                            <a class="action phone" href="tel:${output.phone}"><span class="material-symbols-outlined icon">call</span></a>
+                            <span class="action gender">
+                              <span class="material-symbols-outlined icon">${output.gender == 'female' ? 'female' : 'male'}</span>
+                            </span>
                           </div>
                         </div>
                     </li>`;
@@ -235,8 +249,10 @@
   /**
    * section - contactus
    */
+
+  // form의 submit 이벤트를 훔쳐와 커스텀 이벤트 실행
   document.querySelector('.sec-contact form').onsubmit = (event) => {
-    // form 엘리먼트 가져오기
+    // form 필드 가져오기
     const username = event.target.elements.username;
     const email = event.target.elements.email;
     const message = event.target.elements.message;
@@ -263,10 +279,8 @@
       return false;
     }
 
-    // 메일 보내기
-    // mailto의 body 에서 내용 줄바꿈을 하려면 %0D%0A 을 사용하면 됩니다.
-    message.value = message.value.replace('\n', '%0D%0A');
-    window.open('mailto:kty0529@gmail.com?subject=[프로젝트 의뢰] Request Project&body=Company or Your-name: ' + username.value + '%0D%0AEmail: ' + email.value + '%0D%0AMessage: ' + message.value, '_blank');
+    // 폼 필드에 오류가 없으면 success 처리
+    alert('Success');
 
     return false;
   }
